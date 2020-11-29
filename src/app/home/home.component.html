@@ -1,0 +1,63 @@
+<div class="form-container">
+
+  <div class="response-container" *ngIf="result">
+    <ng-template [ngIf]="submittedSuccesfull" [ngIfElse]="notConnected">
+      <img src="../../assets/img/checked.png" alt="succesfull">
+    </ng-template>
+
+    <ng-template #notConnected>
+      <img src="../../assets/img/warning.png" alt="warning">
+    </ng-template>
+
+    <p>API response: {{apiResponse}}</p>
+  </div>
+
+  <h1>SIGN UP</h1>
+  <form *ngIf="users" [formGroup]="signForm" (ngSubmit)="onSubmit()">
+    <label>
+      <p>Name&nbsp;</p>
+      <p class="form-field-required">&#42;</p>
+      <input type="text" required placeholder="Name" formControlName="name" class="form-control"  minlength="4" maxlength="100">
+      <!-- Check if name touched and not valid -->
+      <div *ngIf="name.invalid && (name.dirty)"
+      class="alert alert-danger holder">
+          <div  class="error" *ngIf="name.errors.required"><img src="../../assets/img/warning.png" alt=""> Name is required</div>
+          <div  class="error" *ngIf="name.errors.minlength"><img src="../../assets/img/warning.png" alt="">Name must contain at least 4 characters</div>
+          <div  class="error" *ngIf="name.errors.maxlength"><img src="../../assets/img/warning.png" alt="">Name must contain at most 100 characters</div>
+          <div  class="error" *ngIf="name.errors.pattern"><img src="../../assets/img/warning.png" alt="">Name must contain only of letters</div>
+          <div class="error-urgent" *ngIf="name.errors.NameNotAllowed"><img src="../../assets/img/warning-white.png" alt=""> User is active</div>
+      </div>
+      <!-- Check if name filled on submit -->
+      <div *ngIf="submitButtonClicked && name.errors" class="alert alert-danger">
+        <div class="error-urgent" *ngIf="name.errors.required"><img src="../../assets/img/warning-white.png" alt="">Name information is requiered</div>
+      </div>
+    </label>
+    <label>
+      <p>E-mail&nbsp;</p><p class="form-field-required">&#42;</p>
+      <input type="text" required placeholder="Email Address" formControlName="email" class="form-control">
+      <!-- Check if email touched and not valid -->
+      <div *ngIf="email.invalid && (email.dirty)"
+      class="alert alert-danger holder">
+          <div  class="error" *ngIf="email.errors.required"><img src="../../assets/img/warning.png" alt="">Email is required</div>
+          <div  class ="error" *ngIf="email.errors.pattern"><img src="../../assets/img/warning.png" alt="">Email does not have the correct syntax</div>
+          <div class="error-urgent"*ngIf="email.errors.EmailNotAllowed"><img src="../../assets/img/warning-white.png" alt="">Email is active</div>
+      </div>
+      <!-- Check if email filled on submit -->
+      <div *ngIf="submitButtonClicked && email.errors" class="alert alert-danger">
+        <div class="error-urgent" *ngIf="email.errors.required"><img src="../../assets/img/warning-white.png" alt="">Email information is requiered</div>
+      </div>
+    </label>
+    <label><p>Gender&nbsp;</p><p class="form-field-required">&#42;</p></label>
+      <select formControlName="gender" (change)="selectGender($event)" class="form-control" required>
+        <option *ngFor="let gen of genders" value={{gen}} >{{gen}}</option>
+      </select>
+      <!-- Check if gender filled on submit -->
+    <div *ngIf="submitButtonClicked && gender.errors" class="alert alert-danger">
+      <div class="error-urgent" *ngIf="gender.errors.required"><img src="../../assets/img/warning-white.png" alt="">Gender information is requiered</div>
+    </div>
+    <div>
+      <button id="reset_button" disabled>Reset</button>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,8 @@
+<h1>All users</h1>
+<ul *ngIf="users">
+  <li *ngFor="let user of users.data">
+    <p class="name">{{user.name}}</p>
+    <p class="country">{{user.email}}</p>
+    <p class="country">{{user.status}}</p>
+  </li>
+</ul>
